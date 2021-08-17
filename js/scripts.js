@@ -1,13 +1,8 @@
-const userEmail = document.getElementById('user-email');
-
-const userPassword = document.getElementById('user-password');
-const submitButton = document.getElementById('submit-btn');
-
-submitButton.addEventListener('click', function () {
-    if (userEmail.value === 'shontan@baap.com' && userPassword.value === 'secret') {
+// login validation 
+document.getElementById('submit-btn').addEventListener('click', function () {
+    const userEmail = document.getElementById('user-email').value;
+    const userPassword = document.getElementById('user-password').value;
+    if (userEmail === 'shontan@baap.com' && userPassword === 'secret') {
         window.location.href = "bank.html";
-    }
-    else {
-        console.log('Please ')
     }
 })

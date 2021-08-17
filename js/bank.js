@@ -1,59 +1,42 @@
-// get the user values 
-const userDeposit = document.getElementById('deposit-input');
-const userWithdraw = document.getElementById('withdraw-input');
+// variables declaration 
 const previousDeposit = document.getElementById('deposit-total');
+const userDeposit = document.getElementById('deposit-input');
 const previousWithdraw = document.getElementById('withdraw-total');
+const userWithdraw = document.getElementById('withdraw-input');
 const previousBalance = document.getElementById('balance-total');
-// deposit button 
-document.getElementById('deposit-btn').addEventListener('click', userDepositFunction);
-document.getElementById('withdraw-btn').addEventListener('click', userWithdrawFunction);
 
-// userDeposit function declaration 
-function userDepositFunction() {
-    // get the previous and new deposit amounts and calculate them 
-    const previousDepositAmount = parseFloat(previousDeposit.innerText);
-    const newDepositAmount = parseFloat(userDeposit.value);
-    const newTotalDeposit = previousDepositAmount + newDepositAmount;
+// deposit of money
+document.getElementById('deposit-btn').addEventListener('click', function () {
+    transactionUpdate(previousDeposit, userDeposit, previousBalance, true);
+})
 
-    // add the total deposit in the deposit section
-    previousDeposit.innerText = newTotalDeposit;
+//withdraw money
+document.getElementById('withdraw-btn').addEventListener('click', function () {
+    transactionUpdate(previousWithdraw, userWithdraw, previousBalance, false);
 
-    // get the previous and new balance amounts and calculate them 
-    const previousBalanceAmount = parseFloat(previousBalance.innerText);
-    const newTotalBalance = previousBalanceAmount + newDepositAmount;
+})
+// transaction update 
+function transactionUpdate(previousInput, userInput, userBalance, isAdd) {
+    // update deposit and withdraw 
+    const previousAmount = parseFloat(previousInput.innerText);
+    const userInputAmount = parseFloat(userInput.value);
+    if (userInputAmount > 0) {
+        const totalAmount = previousAmount + userInputAmount;
+        const previousBalanceAmount = parseFloat(userBalance.innerText);
+        previousInput.innerText = totalAmount;
 
-    // add the total balance 
-    previousBalance.innerText = newTotalBalance;
+        // update balance 
+        if (isAdd) {
+            const newBalanceAmount = previousBalanceAmount + userInputAmount;
+            userBalance.innerText = newBalanceAmount;
 
-    // clear deposit field 
-    userDeposit.value = '';
+        } else {
+            const newBalanceAmount = previousBalanceAmount - userInputAmount;
+            userBalance.innerText = newBalanceAmount;
+        }
+    }
+    // clear the value field 
+    userInput.value = '';
 }
 
-
-// userWithdraw function declaration 
-function userWithdrawFunction() {
-    // get the previous and new withdraw amounts and calculate them 
-    const previousWithdrawAMount = parseFloat(previousWithdraw.innerText);
-    const newWithdrawAmount = parseFloat(userWithdraw.value);
-    const newTotalWithdraw = previousWithdrawAMount + newWithdrawAmount;
-
-    // if (previousWithdrawAMount >== newWithdrawAmount) {
-
-    // add the total withdraw in the withdraw section
-    previousWithdraw.innerText = newTotalWithdraw;
-
-    // get the previous and new balance amounts and calculate them 
-    const previousBalanceAmount = parseFloat(previousBalance.innerText);
-    const newTotalBalance = previousBalanceAmount - newWithdrawAmount;
-
-    // add the total balance 
-    previousBalance.innerText = newTotalBalance;
-
-    // }
-    // else {
-    //     alert("You don't have enough balance to withdraw!");
-    // }
-    // clear withdraw field 
-    userWithdraw.value = '';
-}
 
